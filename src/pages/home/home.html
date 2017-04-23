@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title><span>H</span>ome</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addItem()">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <section>    
+    <ion-card *ngFor="let item of items">
+      <ion-card-header>
+        <ion-icon name="calendar"></ion-icon><span class="date"> {{item.date}}</span>
+      </ion-card-header>
+      <ion-card-content>   
+        <ion-list>
+          <button ion-item (click)="viewItem(item)">
+            <ion-icon name="arrow-forward" item-right></ion-icon>   
+            <span class="weight">{{item.weight}} kg </span>    
+          </button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>  
+  </section>
+</ion-content>

@@ -1,0 +1,50 @@
+<!--
+  Generated template for the AddItem page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>AddItem</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add <span>Entry</span>
+    </ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <ion-list> 
+    <ion-item>
+      <ion-label floating>Weight</ion-label>
+      <ion-input type="text" [(ngModel)]="weight"></ion-input>
+    </ion-item> 
+    <ion-item>
+      <ion-label floating>IMC</ion-label>
+      <ion-input type="text" [(ngModel)]="imc"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Muscle rate</ion-label>
+      <ion-input type="text" [(ngModel)]="musclerate"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Fat rate</ion-label>
+      <ion-input type="text" [(ngModel)]="fatrate"></ion-input>
+    </ion-item>
+ 
+ 
+  </ion-list>
+ 
+  <button full ion-button (click)="saveItem()">Save</button> 
+ 
+</ion-content>

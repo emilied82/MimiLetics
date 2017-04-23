@@ -1,0 +1,95 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+ion-title{
+	font-family: $handwrittenfont;
+	color: $lapislazuli;
+	span{
+		color: $greensheen;
+	}
+}
+
+body{
+	font-family: $mainfont;
+
+	h1{
+		font-family: $handwrittenfont;
+		color: $lapislazuli;
+
+		span{
+			color: $greensheen;
+		}
+	}
+	h2{
+		color:$awesonme;
+		font-size:1.5rem;
+	}
+	.container{
+		display:flex;
+		justify-content: center;
+
+		div{
+			padding:15px;
+			min-width:150px;
+			text-align:center;
+			font-family: $handwrittenfont;
+			color:#fff;			
+		}
+
+		#one{
+
+			background-color:$lapislazuli;
+		}
+
+		#two{
+
+			background-color:$greensheen;
+		}
+
+		#three{
+
+			background-color:$seafoamgreen;
+		}
+
+		#four{
+
+			background-color:$awesonme;
+		}
+	}
+}
+
+// ANDROID STYLES
+.toolbar-title-md{
+	color: $lapislazuli;
+}
+.md, .card-md {
+	h1{		
+		color: $lapislazuli;
+	}
+	h2{
+		color:$awesonme;		
+	}
+	ion-title{		
+		color: $lapislazuli;
+	}
+
+}
+
+// IOS Styles
+.toolbar-title-ios{
+	color: $lapislazuli;
+}

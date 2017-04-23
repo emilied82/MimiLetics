@@ -1,0 +1,21 @@
+page-home {
+
+	ion-card-header{
+		background:url(../assets/img/weightscale_picto.png) 100px 26% no-repeat;
+		.date{
+			color:$greensheen;			
+			margin-left:10px;
+		}		
+	}
+	ion-card-content{
+
+		.weight{
+			color: $awesonme;
+			font-size:2rem;	
+			font-weight:bold;		
+								
+		}
+			
+	}
+
+}

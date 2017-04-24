@@ -32,6 +32,10 @@ public weightDataLabels = [];
 public weightDataEntries = [];
 public imcDataLabels = [];
 public imcDataEntries = [];
+public muscleRateDataLabels = [];
+public muscleRateDataEntries = [];
+public fatRateDataLabels = [];
+public fatRateDataEntries = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: Data) {    
     // Try and get all the entries from data service
@@ -60,6 +64,14 @@ public imcDataEntries = [];
             this.imcDataLabels.push(this.items[i].date);
             this.imcDataEntries.push(this.items[i].imc);
         }
+        if(this.items[i].muscleRate != null){
+            this.muscleRateDataLabels.push(this.items[i].date);
+            this.muscleRateDataEntries.push(this.items[i].muscleRate);
+        }
+        if(this.items[i].fatRate != null){
+            this.fatRateDataLabels.push(this.items[i].date);
+            this.fatRateDataEntries.push(this.items[i].fatRate);
+        }
     }   
    
   }
@@ -74,7 +86,7 @@ public imcDataEntries = [];
             datasets: [
                 {
                     label: "Weight evolution",
-                    fill: false,
+                    fill: true, // false or true
                     lineTension: 0.1,
                     backgroundColor: "rgba(75,192,192,0.4)",
                     borderColor: "rgba(75,192,192,1)",
@@ -82,14 +94,14 @@ public imcDataEntries = [];
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBorderColor: "#FF1654",
                     pointBackgroundColor: "#fff",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: "rgba(75,192,192,1)",
                     pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointHoverBorderWidth: 2,
-                    pointRadius: 1,
+                    pointRadius: 2, // 1
                     pointHitRadius: 10,
                     data: this.weightDataEntries,
                     spanGaps: false,
@@ -104,22 +116,22 @@ public imcDataEntries = [];
             datasets: [
                 {
                     label: "IMC evolution",
-                    fill: false,
+                    fill: true,
                     lineTension: 0.1,
-                    backgroundColor: "rgba(75,192,192,0.4)",
+                    backgroundColor: "#F3FFBD",
                     borderColor: "#247BA0",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: "#70C1B3",
+                    pointBorderColor: "#FF1654",
                     pointBackgroundColor: "#fff",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: "rgba(75,192,192,1)",
                     pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointHoverBorderWidth: 2,
-                    pointRadius: 1,
+                    pointRadius: 2,
                     pointHitRadius: 10,
                     data: this.imcDataEntries,
                     spanGaps: false,
@@ -132,28 +144,28 @@ public imcDataEntries = [];
         this.lineChartMuscleRate = new Chart(this.lineCanvasMuscleRate.nativeElement, { 
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: this.muscleRateDataLabels,
             datasets: [
                 {
                     label: "Muscle rate evolution",
-                    fill: false,
+                  fill: true, // false or true
                     lineTension: 0.1,
                     backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "#247BA0",
+                    borderColor: "rgba(75,192,192,1)",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: "#70C1B3",
+                    pointBorderColor: "#FF1654",
                     pointBackgroundColor: "#fff",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: "rgba(75,192,192,1)",
                     pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointHoverBorderWidth: 2,
-                    pointRadius: 1,
+                    pointRadius: 2, // 1
                     pointHitRadius: 10,
-                    data: [19, 20, 18, 19, 20, 21, 20],
+                    data: this.muscleRateDataEntries,
                     spanGaps: false,
                 }
             ]
@@ -162,28 +174,28 @@ public imcDataEntries = [];
        this.lineChartFatRate = new Chart(this.lineCanvasFatRate.nativeElement, { 
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: this.fatRateDataLabels,
             datasets: [
                 {
                     label: "Fat rate evolution",
-                    fill: false,
+                    fill: true,
                     lineTension: 0.1,
-                    backgroundColor: "rgba(75,192,192,0.4)",
+                    backgroundColor: "#F3FFBD",
                     borderColor: "#247BA0",
                     borderCapStyle: 'butt',
                     borderDash: [],
                     borderDashOffset: 0.0,
                     borderJoinStyle: 'miter',
-                    pointBorderColor: "#70C1B3",
+                    pointBorderColor: "#FF1654",
                     pointBackgroundColor: "#fff",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: "rgba(75,192,192,1)",
                     pointHoverBorderColor: "rgba(220,220,220,1)",
                     pointHoverBorderWidth: 2,
-                    pointRadius: 1,
+                    pointRadius: 2,
                     pointHitRadius: 10,
-                    data: [19, 20, 18, 19, 20, 21, 20],
+                    data: this.fatRateDataEntries,
                     spanGaps: false,
                 }
             ]

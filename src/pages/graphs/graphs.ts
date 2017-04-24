@@ -27,32 +27,50 @@ lineChartMuscleRate: any;
 @ViewChild('lineCanvasFatRate') lineCanvasFatRate; 
 lineChartFatRate: any;
 
+public items = []; // tableau
+public weightDataLabels = [];
+public weightDataEntries = [];
+public imcDataLabels = [];
+public imcDataEntries = [];
 
-public weightData = [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: Data) {
-    // Build the arrays
-    this.dataService.getData().then((entries) => {
- 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: Data) {    
+    // Try and get all the entries from data service
+    this.dataService.getData().then((entries) => { 
       if(entries){
+        console.log("Retrieving data from datasource");
         this.items = JSON.parse(entries);        
-      }else{
+      }
+    });
+    // If no data has been retrieved from datasource, there are hardcoded
+    if(this.items.length == 0){
         this.items = [
         {dataid: '1', weight: '55', date: '20/01/2016', imc: '17', fatRate: '23', muscleRate: '33'},
-        {dataid: '1', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
-        {dataid: '1', weight: '58', date: '02/08/2016', imc: '19', fatRate: '28', muscleRate: '21'}        
+        {dataid: '2', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
+        {dataid: '3', weight: '56', date: '02/08/2016', imc: '18', fatRate: '28', muscleRate: '21'},
+        {dataid: '4', weight: '57', date: '02/09/2016', imc: '19', fatRate: '27', muscleRate: '33'}        
         ];
-      }
- 
-    });  
-
+        console.log("Hardcoding data. Table length: "+this.items.length); // ici, le tableau fait 3 de longueur
+    }
+    
+    for (var i = 0; i < this.items.length; i++) {         
+        console.log("date : "+this.items[i].date + " / poids : "+this.items[i].weight);// Fonctionne et retourne "hici : [object Object]          
+        this.weightDataLabels.push(this.items[i].date);
+        this.weightDataEntries.push(this.items[i].weight);
+        if(this.items[i].imc != null){
+            this.imcDataLabels.push(this.items[i].date);
+            this.imcDataEntries.push(this.items[i].imc);
+        }
+    }   
+   
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {       
+
+    // TODO: exécuter ce code seulement si items not null. Else: message d'erreur
     this.lineChart = new Chart(this.lineCanvas.nativeElement, { 
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: this.weightDataLabels,
             datasets: [
                 {
                     label: "Weight evolution",
@@ -73,7 +91,7 @@ public weightData = [];
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [57, 59, 55, 56, 56, 55, 60],
+                    data: this.weightDataEntries,
                     spanGaps: false,
                 }
             ]
@@ -82,7 +100,7 @@ public weightData = [];
        this.lineChartImc = new Chart(this.lineCanvasImc.nativeElement, { 
         type: 'line',
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: this.imcDataLabels,
             datasets: [
                 {
                     label: "IMC evolution",
@@ -103,7 +121,7 @@ public weightData = [];
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [19, 20, 18, 19, 20, 21, 20],
+                    data: this.imcDataEntries,
                     spanGaps: false,
                 }
             ]

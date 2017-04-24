@@ -21,8 +21,9 @@ export class HomePage {
       }else{
         this.items = [
         {dataid: '1', weight: '55', date: '20/01/2016', imc: '17', fatRate: '23', muscleRate: '33'},
-        {dataid: '1', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
-        {dataid: '1', weight: '58', date: '02/08/2016', imc: '19', fatRate: '28', muscleRate: '21'}        
+        {dataid: '2', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
+        {dataid: '3', weight: '56', date: '02/08/2016', imc: '18', fatRate: '28', muscleRate: '21'},
+        {dataid: '4', weight: '57', date: '02/09/2016', imc: '19', fatRate: '27', muscleRate: '33'}       
         ];
       }
  

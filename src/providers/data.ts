@@ -21,6 +21,7 @@ export class Data {
   }
  
   save(data){
+    // saves all items: basically erases the previous content
     let newData = JSON.stringify(data);
     this.storage.set('entries', newData);
   }

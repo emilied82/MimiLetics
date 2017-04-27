@@ -40,6 +40,7 @@ export class DetailsPage {
     if (index > -1) {
        this.items.splice(item, 1);
     }*/
+    
     alert("Deletion coming soon");        
   }
 

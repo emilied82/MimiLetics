@@ -8,36 +8,42 @@
 
   <ion-navbar>
     <ion-title><span>P</span>rofile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="editProfile()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 	<ion-card>
 		<ion-card-header>
-		<h1>{{firstname}} <span>{{lastname}}</span></h1>
+		<h1>{{userProfile.firstname}} <span>{{userProfile.lastname}}</span></h1>
 		</ion-card-header>
 		<ion-card-content>
-			<ion-card-title>
-				<img src="assets/img/female_avatar.png"/>
+			<ion-card-title>			
+				<img *ngIf="userProfile.gender == 'female'" src="assets/img/female_avatar.png"/>
+				<img *ngIf="userProfile.gender == 'male'" src="assets/img/male_avatar.png"/>				
 			</ion-card-title>
 			<ion-list>
 				<ion-item>
 					<h2>Gender</h2>
-					<p>{{gender}}</p>
+					<p>{{userProfile.gender}}</p>
 				</ion-item>
 				<ion-item>
 					<h2>Email</h2>
-					<p>{{email}}</p>
+					<p>{{userProfile.email}}</p>
 				</ion-item>
 				<ion-item>
 					<h2>Height</h2>
-					<p>{{height}} m</p>
+					<p>{{userProfile.height}} cm</p>
 				</ion-item>
 				<ion-item>
 					<h2>Objective</h2>
-					<p>{{weightgoal}} kg</p>
+					<p>{{userProfile.weightgoal}} kg</p>
 				</ion-item>			
 			</ion-list>
 		</ion-card-content>

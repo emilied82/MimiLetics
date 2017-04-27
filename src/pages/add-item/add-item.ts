@@ -5,6 +5,7 @@ import { NavController, ViewController } from 'ionic-angular';
   selector: 'page-add-item',
   templateUrl: 'add-item.html'
 })
+
 export class AddItemPage {
  
   weight;

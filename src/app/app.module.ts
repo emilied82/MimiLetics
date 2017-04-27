@@ -12,7 +12,9 @@ import { DetailsPage } from '../pages/details/details';
 import { GraphsPage } from '../pages/graphs/graphs';
 import { ProfilePage } from '../pages/profile/profile';
 import { AddItemPage } from '../pages/add-item/add-item';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { Data } from '../providers/data';
+import { User } from '../providers/user';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +29,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     DetailsPage, 
     GraphsPage,
     ProfilePage,
-    AddItemPage
+    AddItemPage,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -44,10 +47,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     DetailsPage,
     GraphsPage,
     ProfilePage,
-    AddItemPage
+    AddItemPage,
+    EditProfilePage
   ],
   providers: [
     Data,
+    User,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

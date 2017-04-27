@@ -1,5 +1,7 @@
 import { Component, ViewChild  } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { User } from '../../providers/user';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 
 /**
  * Generated class for the Profile page.
@@ -12,26 +14,50 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
+
 export class ProfilePage {
-	firstname;
-	lastname;
-	email;
-	height;
-	weightgoal;
-	gender;
 
+  public userProfile = {};
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: User, public modalCtrl: ModalController) {
+    this.userService.getProfile().then((profile) => { 
+      if(profile){
+        this.userProfile = JSON.parse(profile); 
+        console.log(JSON.parse(profile)); // Object { firstname: "Emilie", lastname: "Didier", email: "milou506@hotmail.com", height: "175", weightgoal: "55", gender: "female" }
+      }else{
+        this.userProfile = {        
+          firstname: "Emilie", 
+          lastname: "Didier", 
+          email: "milou506@hotmail.com",
+          height: "175",
+          weightgoal: "55",
+          gender: "female"
+        };   
+        console.log("Hardcoding data");
+        userService.save(this.userProfile);
+      } 
+    });   
   }
 
-  ionViewDidLoad() {
-  	this.firstname = "emilie";
-  	this.lastname = "didier";
-  	this.email = "milou506@hotmail.com";
-  	this.gender = "female";
-  	this.height = "1.75";
-  	this.weightgoal = "55";
-   console.log('ionViewDidLoad Profile');    
+  ionViewDidLoad() {  	
+    console.log('ionViewDidLoad Profile');    
+  }
+
+  editProfile(){ 
+    let addModal = this.modalCtrl.create(EditProfilePage); 
+    addModal.onDidDismiss((profile) => { 
+      if(profile){
+        this.saveProfile(profile);            
+      } 
+    }); 
+    addModal.present(); 
+  }
+
+  saveProfile(profile){
+    this.userProfile = profile;
+    this.userService.save(this.userProfile);
+      
   }
 
 }

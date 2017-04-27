@@ -1,0 +1,49 @@
+<!--
+  Generated template for the EditProfile page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit <span>Profile</span></ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list> 
+		<ion-item>
+		  <ion-label floating>First name</ion-label>
+		  <ion-input type="text" [(ngModel)]="userProfile.firstname"></ion-input>
+		</ion-item> 	
+		<ion-item>
+		  <ion-label floating>Last name</ion-label>
+		  <ion-input type="text" [(ngModel)]="userProfile.lastname"></ion-input>
+		</ion-item> 
+		<ion-item>
+			<ion-label floating>Gender</ion-label>
+  			<ion-select [(ngModel)]="userProfile.gender">
+    			<ion-option value="female">Female</ion-option>
+    			<ion-option value="male">Male</ion-option>
+  			</ion-select>
+		</ion-item> 
+		<ion-item>
+		  <ion-label floating>Email</ion-label>
+		  <ion-input type="email" [(ngModel)]="userProfile.email"></ion-input>
+		</ion-item>	
+		<ion-item>
+		  <ion-label floating>Height (cm)</ion-label>
+		  <ion-input type="text" [(ngModel)]="userProfile.height"></ion-input>
+		</ion-item>	
+		<ion-item>
+		  <ion-label floating>Weight goal (kg)</ion-label>
+		  <ion-input type="text" [(ngModel)]="userProfile.weightgoal"></ion-input>
+		</ion-item>	
+	</ion-list>
+ 
+  <button full ion-button (click)="saveProfile()">Save</button> 
+
+</ion-content>

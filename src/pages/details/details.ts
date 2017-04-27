@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the Details page.
@@ -21,27 +21,29 @@ export class DetailsPage {
 	fatRate;
 	muscleRate;
 	
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Details');
-    this.id=this.navParams.get('item').id;
+    this.id=this.navParams.get('item').dataid;    
     this.weight=this.navParams.get('item').weight;
-    this.date=this.navParams.get('item').date;
+    this.date=this.navParams.get('item').date;    
     this.imc=this.navParams.get('item').imc;
     this.fatRate=this.navParams.get('item').fatRate;
     this.muscleRate=this.navParams.get('item').muscleRate;
+    console.log("Id de la data: "+this.id+" date "+this.date);
     
-    }
+  }
 
-  deleteItem(item){
-    /*var index = this.items.indexOf(item, 0);
+  deleteItem(){
+    console.log('Removing item nr '+this.id);
+    /*var index = this.items.indexOf(this.id, 0);
     if (index > -1) {
        this.items.splice(item, 1);
     }*/
-    
-    alert("Deletion coming soon");        
+    let navparams = {action:"delete", id:this.id};
+    this.navCtrl.pop(navparams);         
   }
 
 }

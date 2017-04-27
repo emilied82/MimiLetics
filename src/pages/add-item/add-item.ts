@@ -22,7 +22,7 @@ export class AddItemPage {
 
     var d = new Date(Date.now());
      
-    let newItem = {
+    let newItem = {      
         weight: this.weight,
         imc: this.imc,
         muscleRate: this.musclerate,

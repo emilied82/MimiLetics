@@ -10,8 +10,8 @@ import { Data } from '../../providers/data';
   templateUrl: 'home.html'
 })
 export class HomePage {
-	public items = [];
-  
+
+	public items = [];  
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data) {
       this.dataService.getData().then((entries) => {
@@ -25,29 +25,30 @@ export class HomePage {
         {dataid: '3', weight: '56', date: '02/08/2016', imc: '18', fatRate: '28', muscleRate: '21'},
         {dataid: '4', weight: '57', date: '02/09/2016', imc: '19', fatRate: '27', muscleRate: '33'}       
         ];
-      }
- 
-    });  	
-
+      } 
+    }); 
   }
 
-   ionViewDidLoad(){   
-     
+  ionViewWillEnter(){
+    console.log("ici");
   }
+
+  ionViewDidLoad(){   
+     console.log("home loaded");
+  }
+
+
   addItem(){
  
     let addModal = this.modalCtrl.create(AddItemPage);
  
-    addModal.onDidDismiss((item) => {
- 
+    addModal.onDidDismiss((item) => { 
           if(item){
+            item.dataid = this.items.length + 1;
             this.saveItem(item);            
-          }
- 
-    });
- 
-    addModal.present();
- 
+          } 
+    }); 
+    addModal.present(); 
   }
  
   saveItem(item){
@@ -58,5 +59,6 @@ export class HomePage {
   	this.navCtrl.push(DetailsPage, {
   		item: item
   	});
+    
   }  
 }

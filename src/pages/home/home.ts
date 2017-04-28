@@ -14,11 +14,12 @@ export class HomePage {
 	public items = [];  
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data) {
-      this.dataService.getData().then((entries) => {
- 
-      if(entries){
+      this.dataService.getData().then((entries) => { 
+      if(entries && entries.length >0){
         this.items = JSON.parse(entries); 
+        console.log("Getting "+this.items.length+" items from DataService");
       }else{
+        console.log("Hardcoding data on homepage constructor");
         this.items = [
         {dataid: '1', weight: '55', date: '20/01/2016', imc: '17', fatRate: '23', muscleRate: '33'},
         {dataid: '2', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
@@ -27,21 +28,23 @@ export class HomePage {
         ];
       } 
     }); 
-  }
+  }  
 
   ionViewWillEnter(){
-    console.log("ici");
+    // S'il y a eu une suppression, on remet à jour les entrées
+    this.dataService.getData().then((entries) => { 
+      if(entries && entries.length >0){
+        this.items = JSON.parse(entries); 
+        console.log("Getting data from DataService: "+this.items+" lenght: "+this.items.length);
+      }
+    }); 
+
   }
 
-  ionViewDidLoad(){   
-     console.log("home loaded");
-  }
+  ionViewDidLoad(){}
 
-
-  addItem(){
- 
-    let addModal = this.modalCtrl.create(AddItemPage);
- 
+  addItem(){ 
+    let addModal = this.modalCtrl.create(AddItemPage); 
     addModal.onDidDismiss((item) => { 
           if(item){
             item.dataid = this.items.length + 1;
@@ -55,6 +58,7 @@ export class HomePage {
     this.items.push(item);
     this.dataService.save(this.items);
   }
+
   viewItem(item){
   	this.navCtrl.push(DetailsPage, {
   		item: item

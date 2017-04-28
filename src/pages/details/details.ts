@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Data } from '../../providers/data';
 
 /**
  * Generated class for the Details page.
@@ -20,30 +21,44 @@ export class DetailsPage {
 	imc;
 	fatRate;
 	muscleRate;
+ 
 	
-  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController, public dataService: Data) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Details');
+    
     this.id=this.navParams.get('item').dataid;    
     this.weight=this.navParams.get('item').weight;
     this.date=this.navParams.get('item').date;    
     this.imc=this.navParams.get('item').imc;
     this.fatRate=this.navParams.get('item').fatRate;
-    this.muscleRate=this.navParams.get('item').muscleRate;
-    console.log("Id de la data: "+this.id+" date "+this.date);
+    this.muscleRate=this.navParams.get('item').muscleRate;    
     
   }
 
-  deleteItem(){
+  deleteItem(){    
     console.log('Removing item nr '+this.id);
-    /*var index = this.items.indexOf(this.id, 0);
-    if (index > -1) {
-       this.items.splice(item, 1);
-    }*/
-    let navparams = {action:"delete", id:this.id};
-    this.navCtrl.pop(navparams);         
+    // Getting itms list from DataService to create table => remove item => save table
+    this.dataService.getData().then((entries) => { 
+      if(entries){
+        let items = [];
+        items = JSON.parse(entries); 
+        console.log("Items: "+items+" / Navparams: "+this.navParams.get('item'));
+        var index = items.indexOf(this.navParams.get('item'), 0);
+        console.log("Index to be removed:"+index);
+        console.log("Longueur avant splice:"+items.length);
+        items.splice(1, 1);// on enlève un élément situé à l'indice 1
+        console.log("Longueur après splice:"+items.length);
+        /*if (index > -1) {
+           items.splice(1, 1);
+           console.log("spliced list");
+        }  */
+        this.dataService.save(items);        
+      }
+    }); 
+    
+    this.navCtrl.pop();          
   }
 
 }

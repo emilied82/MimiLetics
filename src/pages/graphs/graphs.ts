@@ -27,7 +27,6 @@ lineChartMuscleRate: any;
 @ViewChild('lineCanvasFatRate') lineCanvasFatRate; 
 lineChartFatRate: any;
 
-public items = []; // tableau
 public weightDataLabels = [];
 public weightDataEntries = [];
 public imcDataLabels = [];
@@ -38,45 +37,34 @@ public fatRateDataLabels = [];
 public fatRateDataEntries = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: Data) {    
-    // Try and get all the entries from data service
     this.dataService.getData().then((entries) => { 
       if(entries){
-        console.log("Retrieving data from datasource");
-        this.items = JSON.parse(entries);        
+        let items = [];      
+        items = JSON.parse(entries);
+        for (let item of items) {         
+            console.log("date : "+item.date + " / poids : "+item.weight);// Fonctionne et retourne "hici : [object Object]          
+            this.weightDataLabels.push(item.date);
+            this.weightDataEntries.push(item.weight);
+            console.log("longueur weightDataEntries: "+this.weightDataEntries.length);
+            console.log("longueur weightDataLabels: "+this.weightDataLabels.length);
+            if(item.imc != null){
+                this.imcDataLabels.push(item.date);
+                this.imcDataEntries.push(item.imc);
+            }
+            if(item.muscleRate != null){
+                this.muscleRateDataLabels.push(item.date);
+                this.muscleRateDataEntries.push(item.muscleRate);
+            }
+            if(item.fatRate != null){
+                this.fatRateDataLabels.push(item.date);
+                this.fatRateDataEntries.push(item.fatRate);
+            }
+        }          
       }
-    });
-    // If no data has been retrieved from datasource, there are hardcoded
-    if(this.items.length == 0){
-        this.items = [
-        {dataid: '1', weight: '55', date: '20/01/2016', imc: '17', fatRate: '23', muscleRate: '33'},
-        {dataid: '2', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
-        {dataid: '3', weight: '56', date: '02/08/2016', imc: '18', fatRate: '28', muscleRate: '21'},
-        {dataid: '4', weight: '57', date: '02/09/2016', imc: '19', fatRate: '27', muscleRate: '33'}        
-        ];
-        console.log("Hardcoding data. Table length: "+this.items.length); // ici, le tableau fait 3 de longueur
-    }
-    
-    for (var i = 0; i < this.items.length; i++) {         
-        console.log("date : "+this.items[i].date + " / poids : "+this.items[i].weight);// Fonctionne et retourne "hici : [object Object]          
-        this.weightDataLabels.push(this.items[i].date);
-        this.weightDataEntries.push(this.items[i].weight);
-        if(this.items[i].imc != null){
-            this.imcDataLabels.push(this.items[i].date);
-            this.imcDataEntries.push(this.items[i].imc);
-        }
-        if(this.items[i].muscleRate != null){
-            this.muscleRateDataLabels.push(this.items[i].date);
-            this.muscleRateDataEntries.push(this.items[i].muscleRate);
-        }
-        if(this.items[i].fatRate != null){
-            this.fatRateDataLabels.push(this.items[i].date);
-            this.fatRateDataEntries.push(this.items[i].fatRate);
-        }
-    }   
-   
+    });   
   }
 
-  ionViewDidLoad() {       
+  ionViewDidLoad() {  
 
     // TODO: exécuter ce code seulement si items not null. Else: message d'erreur
     this.lineChart = new Chart(this.lineCanvas.nativeElement, { 
@@ -108,7 +96,7 @@ public fatRateDataEntries = [];
                 }
             ]
         }
-       });  
+       });       
        this.lineChartImc = new Chart(this.lineCanvasImc.nativeElement, { 
         type: 'line',
         data: {

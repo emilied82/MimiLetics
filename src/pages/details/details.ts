@@ -43,18 +43,16 @@ export class DetailsPage {
     this.dataService.getData().then((entries) => { 
       if(entries){
         let items = [];
-        items = JSON.parse(entries); 
-        console.log("Items: "+items+" / Navparams: "+this.navParams.get('item'));
-        var index = items.indexOf(this.navParams.get('item'), 0);
-        console.log("Index to be removed:"+index);
-        console.log("Longueur avant splice:"+items.length);
-        items.splice(1, 1);// on enlève un élément situé à l'indice 1
-        console.log("Longueur après splice:"+items.length);
-        /*if (index > -1) {
-           items.splice(1, 1);
-           console.log("spliced list");
-        }  */
-        this.dataService.save(items);        
+        let newItems = [];
+        items = JSON.parse(entries);                 
+        // On parcourt la liste des items et on les copie dans un nouveau tableau, sauf celui qu'on veut supprimer
+        for(let newItem of items){
+          //console.log(newItem.dataid+" VS "+this.navParams.get('item').dataid);
+          if(newItem.dataid != this.navParams.get('item').dataid){
+            newItems.push(newItem);
+          }
+        }
+        this.dataService.save(newItems);        
       }
     }); 
     

@@ -4,6 +4,7 @@ import { FormsModule, FormBuilder, FormControl, Validators, AbstractControl } fr
 import { DetailsPage } from '../details/details';
 import { AddItemPage } from '../add-item/add-item';
 import { Data } from '../../providers/data';
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-home',
@@ -13,7 +14,7 @@ export class HomePage {
 
 	public items = [];  
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data, public file: File) {
       this.dataService.getData().then((entries) => { 
       if(entries && entries.length >0){
         this.items = JSON.parse(entries); 
@@ -31,7 +32,7 @@ export class HomePage {
         ];
       } 
     }); 
-  }  
+  }
 
   ionViewWillEnter(){
     // S'il y a eu une suppression, on remet à jour les entrées
@@ -67,5 +68,60 @@ export class HomePage {
   		item: item
   	});
     
-  }  
+  }
+
+  sendData(){
+    this.dataService.getData().then((entries) => { 
+      if(entries && entries.length >0){
+        this.items = JSON.parse(entries); 
+        console.log("Getting data from DataService: "+this.items+" lenght: "+this.items.length);
+        this.saveToCsv(this.items);
+      }
+    });
+
+  } 
+
+  saveToCsv(items){
+    var csv: any = this.convertToCSV(items);
+    var fileName: any = "fitnessData.csv";
+
+
+    this.file.writeFile(this.file.externalRootDirectory, fileName, csv, true).then(
+    _ => {
+      alert('Success')
+      }
+    )
+    .catch(err => {
+        this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv).then(
+          _ => {
+            alert('Success')
+          }
+        )
+        .catch(
+          err => {
+            alert('Failure');
+            console.log("Contenu du csv: "+csv);
+          }
+        )
+      }
+    ) 
+
+  } // end of saveToCsv function
+
+  convertToCSV(items) {
+    var csv: any = ''
+    var line: any = ''
+    var nbOfItems = items.length
+
+    //Header ---> Colonnes du tableau
+    
+    csv += "ID;date;weight"+'\n';
+
+    for (var i = 0; i < nbOfItems; i++) {
+      line='';
+      line += items[i].dataid +';'+ items[i].date+';'+items[i].weight;      
+      csv += line + '\r\n';
+    }  
+    return csv
+  } 
 }

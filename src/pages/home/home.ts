@@ -19,16 +19,19 @@ export class HomePage {
       if(entries && entries.length >0){
         this.items = JSON.parse(entries); 
         console.log("Getting "+this.items.length+" items from DataService");
+        for (let item of this.items) {         
+          item.date = new Date(item.date);
+        }       
       }else{
         console.log("Hardcoding data on homepage constructor");
         this.items = [
-        {dataid: '1', weight: '55', date: '20/01/2016', imc: '17', fatRate: '23', muscleRate: '33'},
-        {dataid: '2', weight: '58', date: '21/07/2016', imc: '19', fatRate: '30', muscleRate: '20'},
-        {dataid: '3', weight: '56', date: '02/08/2016', imc: '18', fatRate: '28', muscleRate: '21'},
-        {dataid: '4', weight: '57', date: '02/09/2016', imc: '19', fatRate: '27', muscleRate: '33'},
-        {dataid: '5', weight: '56', date: '03/05/2017'},
-        {dataid: '6', weight: '56,8', date: '22/07/2017'},
-        {dataid: '7', weight: '56,3', date: '06/09/2017'}       
+        {dataid: '1', weight: '55', date: '2016-01-20', imc: '17', fatRate: '23', muscleRate: '33'},
+        {dataid: '2', weight: '58', date: '2016-07-21', imc: '19', fatRate: '30', muscleRate: '20'},
+        {dataid: '3', weight: '56', date: '2016-08-02', imc: '18', fatRate: '28', muscleRate: '21'},
+        {dataid: '4', weight: '57', date: '2016-09-02', imc: '19', fatRate: '27', muscleRate: '33'},
+        {dataid: '5', weight: '56', date: '2017-03-05'},
+        {dataid: '6', weight: '56,8', date: '2017-07-22'},
+        {dataid: '7', weight: '56,3', date: '2017-09-06'}       
         ];
       } 
     }); 
@@ -39,10 +42,10 @@ export class HomePage {
     this.dataService.getData().then((entries) => { 
       if(entries && entries.length >0){
         this.items = JSON.parse(entries); 
-        console.log("Getting data from DataService: "+this.items+" lenght: "+this.items.length);
+        console.log("Getting data from DataService: "+this.items+" lenght: "+this.items.length);        
+        this.sortByDate(); 
       }
     }); 
-
   }
 
   ionViewDidLoad(){}
@@ -60,6 +63,7 @@ export class HomePage {
  
   saveItem(item){
     this.items.push(item);
+    this.sortByDate();
     this.dataService.save(this.items);
   }
 
@@ -68,6 +72,28 @@ export class HomePage {
   		item: item
   	});
     
+  }
+
+  sortByDate(){
+    // Sorting items by date
+    this.items.sort(function(a, b) {
+      console.log("sorting function");
+      var x = new Date(a.date); 
+      var y = new Date(b.date);               
+      console.log("Result of sorting "+x+" VS "+y+" : "+(x < y));
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });  
+  }
+
+  sortByWeight(){
+    // sort
+    this.items.sort(function(a, b) {
+      console.log("sorting function");          
+      var x = a.weight; 
+      var y = b.weight;          
+      console.log("sorting result: "+(x < y));
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });  
   }
 
   sendData(){
@@ -115,7 +141,7 @@ export class HomePage {
 
     //Header ---> Colonnes du tableau
     
-    csv += "ID;date;weight"+'\n';
+    csv += "ID;date;weight"+'\r\n';
 
     for (var i = 0; i < nbOfItems; i++) {
       line='';

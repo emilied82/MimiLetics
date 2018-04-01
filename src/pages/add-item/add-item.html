@@ -26,6 +26,10 @@
 <ion-content>
   <ion-list> 
     <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date"></ion-datetime>
+    </ion-item> 
+    <ion-item>
       <ion-label floating>Weight</ion-label>
       <ion-input type="text" [(ngModel)]="weight"></ion-input>
     </ion-item> 

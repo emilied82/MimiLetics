@@ -17,7 +17,7 @@ export class AddItemPage {
   constructor(public navCtrl: NavController, public view: ViewController) {
  
   }
- 
+
   saveItem(){
 
     var d = new Date(Date.now());
@@ -27,7 +27,7 @@ export class AddItemPage {
         imc: this.imc,
         muscleRate: this.musclerate,
         fatRate: this.fatrate,
-        date: d.toLocaleDateString(),
+        date: this.date,
         userid: '2'
     };    
     this.view.dismiss(newItem);

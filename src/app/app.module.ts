@@ -15,6 +15,8 @@ import { AddItemPage } from '../pages/add-item/add-item';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { Data } from '../providers/data';
 import { User } from '../providers/user';
+import { DataWebService } from '../providers/data-web-service';
+import { HttpModule } from '@angular/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +38,7 @@ import { File } from '@ionic-native/file';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -54,6 +57,7 @@ import { File } from '@ionic-native/file';
   ],
   providers: [
     Data,
+    DataWebService,
     User,
     StatusBar,
     File,

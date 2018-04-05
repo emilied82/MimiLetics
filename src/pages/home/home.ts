@@ -5,6 +5,7 @@ import { DetailsPage } from '../details/details';
 import { AddItemPage } from '../add-item/add-item';
 import { Data } from '../../providers/data';
 import { File } from '@ionic-native/file';
+import { DataWebService } from '../../providers/data-web-service';
 
 @Component({
   selector: 'page-home',
@@ -13,8 +14,10 @@ import { File } from '@ionic-native/file';
 export class HomePage {
 
 	public items = [];  
+  public people: any;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data, public file: File) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data, public file: File, public dataWebService: DataWebService) {
+      this.loadPeople();
       this.dataService.getData().then((entries) => { 
       if(entries && entries.length >0){
         this.items = JSON.parse(entries); 
@@ -50,6 +53,13 @@ export class HomePage {
 
   ionViewDidLoad(){}
 
+  loadPeople(){
+    this.dataWebService.load()
+    .then(data => {
+      this.people = data;
+    });
+  }
+
   addItem(){ 
     let addModal = this.modalCtrl.create(AddItemPage); 
     addModal.onDidDismiss((item) => { 
@@ -70,8 +80,7 @@ export class HomePage {
   viewItem(item){
   	this.navCtrl.push(DetailsPage, {
   		item: item
-  	});
-    
+  	});    
   }
 
   sortByDate(){

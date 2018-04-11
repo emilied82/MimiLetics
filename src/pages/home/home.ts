@@ -16,53 +16,29 @@ export class HomePage {
   public items = [];  
   
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public dataService: Data, public dataWebService: DataWebService) {
-      //this.loadPeople();
-      // OBS ? Sauvegarder les données en mémoire locale - this.dataService.save(this.items);
+  }
 
-      /*
-      OBSOLETE: récupération des infos dans la mémoire locale de l'app, avant connexion au web-service
-      this.dataService.getData().then((entries) => { 
-      if(entries && entries.length >0){
-        this.items = JSON.parse(entries); 
-        console.log("Getting "+this.items.length+" items from DataService");
-      }
-    }); */
-  }  
-
-  loadPeople(){
+  /* Retrieving entries from DataWebService*/
+  loadEntriesFromWebService(){
     this.dataWebService.load()
-    .then(data => {      
-      
-      // data est de type any[];
-      for (let item of data) { 
-        console.log(item);
-        this.items.push(item);        
-      }
+    .then(data => {
+      this.fitnessentries = data;
+      console.log("Home: récupération données BDD "+data+" lenght: "+data.length);
+      console.log("Fitnessentries "+this.fitnessentries+" lenght: "+this.fitnessentries.length);
     })
     .catch(err => {
-      console.log("Home : erreur catchée"+err);
+      console.log("Home : erreur sur récupération entrées BDD. Ajouter ici basculement sur mémoire locale de l'appareil.");
     });
 
   }
 
-  ionViewWillEnter(){
-    // S'il y a eu une suppression, on remet à jour les entrées
-    /*
-      OBSOLETE: récupération des infos dans la mémoire locale de l'app, avant connexion au web-service
-      this.dataService.getData().then((entries) => { 
-      if(entries && entries.length >0){
-        this.items = JSON.parse(entries); 
-        console.log("Getting data from DataService: "+this.items+" lenght: "+this.items.length);
-      }
-    }); */
-     this.loadPeople();
-     
-     
-
-  }
+   ionViewWillEnter(){
+    // A chaque fois qu'on revient sur la home, on remet à jour les entrées
+    this.loadEntriesFromWebService();
+ }
 
   ionViewDidLoad(){
-    console.log("Getting data from WebDataService: "+this.items.length);
+    //console.log("Getting data from WebDataService: "+this.items.length);
   }
 
   addItem(){ 
@@ -71,6 +47,7 @@ export class HomePage {
           if(item){
             item.dataid = this.items.length + 1;
             this.saveItem(item);
+            this.dataWebService.addEntry(item);      
             // TODO: need to update or reload graphs page      
           } 
     }); 
@@ -79,8 +56,7 @@ export class HomePage {
  
   saveItem(item){
     this.items.push(item);
-    //this.dataService.save(this.items);
-    this.dataWebService.addEntry(item);
+    this.dataService.save(this.items);     
   }
 
   viewItem(item){
